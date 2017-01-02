@@ -1,10 +1,6 @@
 organization := "org.hammerlab.genomics"
 name := "utils"
-version := "1.0.0"
-
-libraryDependencies ++= Seq(
-  libraries.value('adam_core),
-  libraries.value('htsjdk)
-)
-
-testDeps += libraries.value('test_utils)
+version := "1.1.0-SNAPSHOT"
+deps += libs.value('htsjdk)
+addSparkDeps
+publishTestJar
