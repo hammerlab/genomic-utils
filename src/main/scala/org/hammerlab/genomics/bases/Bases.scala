@@ -42,6 +42,9 @@ object Bases {
   implicit def makeBasesFromBytes(bytes: Bytes): Bases = Bases(bytes)
   implicit def makeBasesFromArray(bytes: Array[Byte]): Bases = Bases(bytes.toVector)
 
+  /** Convert a string (e.g. "AAAGGC") to a byte array. */
+  def apply(basesStr: String): Bases = basesStr.toUpperCase.getBytes
+
   implicit def unmakeBases(bases: Bases): Bytes = bases.bytes
 
   def iteratorOrdering[T](implicit ord: Ordering[T]) =
