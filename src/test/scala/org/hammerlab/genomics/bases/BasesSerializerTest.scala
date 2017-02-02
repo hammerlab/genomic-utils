@@ -7,18 +7,21 @@ class BasesSerializerTest
     with SparkSerialization
     with BasesUtil {
 
-  def check(bases: Bases): Unit =
-    deserialize[Bases](serialize(bases)) should ===(bases)
+  def check(bases: Bases, otherBases: Bases = ""): Unit = {
+    val deserd = deserialize[Bases](serialize(bases))
+    deserd should ===(bases)
+    deserd should !==(otherBases)
+  }
 
   test("some bases") {
-    check("AACGTTCA")
+    check("AACGTTCA", "AACGTTCG")
   }
 
   test("empty") {
-    check("")
+    check("", "G")
   }
 
   test("single") {
-    check("C")
+    check("C", "A")
   }
 }

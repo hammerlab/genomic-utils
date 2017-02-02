@@ -1,14 +1,25 @@
 package org.hammerlab.genomics.bases
 
 import org.hammerlab.genomics.bases.Base._
-import org.hammerlab.genomics.bases.Bases._
+import org.hammerlab.genomics.bases.Bases.Bytes
+
+import scala.collection.generic.CanBuildFrom
+import scala.collection.{ IndexedSeqLike, mutable }
 
 /**
  * [[Bases]] wraps a [[Vector[Byte]]] where each [[Byte]] holds the ASCII value of one of 5 values: A, C, G, T, N.
  */
 class Bases private(val bytes: Bytes)
   extends AnyVal
-    with BasesBuffer {
+    with BasesBuffer
+    with IndexedSeqLike[Base, Bases] {
+
+  protected[this] override def thisCollection: IndexedSeq[Base] = bytes
+  protected[this] override def toCollection(repr: Bases): IndexedSeq[Base] = bytes
+
+  override protected[this] def newBuilder: mutable.Builder[Base, Bases] = Bases.newBuilder
+
+  override def seq: IndexedSeq[Base] = bytes
 
   override type LengthT = Int
 
@@ -17,10 +28,10 @@ class Bases private(val bytes: Bytes)
   def apply(idx: LengthT): Base = bytes(idx)
 
   /** Watson-Crick complement of a sequence of bases. */
-  def complement: Bases = bytes.map(_.complement: Byte)
+  def complement: Bases = map(_.complement)
 
   /** Watson-Crick complement of a sequence of bases, with the sequence reversed. */
-  def reverseComplement: Bases = bytes.reverse.complement
+  def reverseComplement: Bases = reverse.complement
 
   /** Are all the given bases standard? */
   def allStandardBases: Boolean = bytes.forall(_.isStandardBase)
@@ -32,20 +43,15 @@ object Bases {
 
   val empty = apply()
 
-  type Bytes = Vector[Byte]
+  type Bytes = Vector[Base]
 
   // Externally-accessible constructors.
-  def apply(bytes: Bytes): Bases = new Bases(bytes.map(_.unmask: Byte))
-  def apply(bytes: Byte*): Bases = apply(Vector(bytes: _*))
-
-  // Implicit constructors.
-  implicit def makeBasesFromBytes(bytes: Bytes): Bases = Bases(bytes)
-  implicit def makeBasesFromArray(bytes: Array[Byte]): Bases = Bases(bytes.toVector)
+  def apply(bytes: Bytes): Bases = new Bases(bytes.map(_.unmask))
+  def apply(bytes: Base*): Bases = apply(Vector(bytes: _*))
+  def apply(bytes: Array[Base]): Bases = Bases(bytes.toVector)
 
   /** Convert a string (e.g. "AAAGGC") to a byte array. */
-  def apply(basesStr: String): Bases = basesStr.toUpperCase.getBytes
-
-  implicit def unmakeBases(bases: Bases): Bytes = bases.bytes
+  def apply(basesStr: String): Bases = Bases(basesStr.iterator.map(_.toUpper.toByte: Base).toVector)
 
   def iteratorOrdering[T](implicit ord: Ordering[T]) =
     new Ordering[Iterator[T]] {
@@ -63,9 +69,30 @@ object Bases {
       }
     }
 
+
   implicit object BasesOrdering extends Ordering[Bases] {
-    val ord = iteratorOrdering[Byte]
+    val ord = iteratorOrdering[Base]
     override def compare(x: Bases, y: Bases): Int =
       ord.compare(x.bytes.iterator, y.bytes.iterator)
   }
+
+  def newBuilder: mutable.Builder[Base, Bases] = Vector.newBuilder[Base].mapResult(Bases(_))
+
+  implicit def canBuildFromBases: CanBuildFrom[Bases, Base, Bases] =
+    new CanBuildFrom[Bases, Base, Bases] {
+      override def apply(from: Bases): mutable.Builder[Base, Bases] = newBuilder
+      override def apply(): mutable.Builder[Base, Bases] = newBuilder
+    }
+
+  implicit val canBuildFromSeqs =
+    new CanBuildFrom[Iterable[_], Base, Bases] {
+      override def apply(from: Iterable[_]): mutable.Builder[Base, Bases] = Bases.newBuilder
+      override def apply(): mutable.Builder[Base, Bases] = Bases.newBuilder
+    }
+
+  implicit val canBuildFromArrays =
+    new CanBuildFrom[Array[_], Base, Bases] {
+      override def apply(from: Array[_]): mutable.Builder[Base, Bases] = Bases.newBuilder
+      override def apply(): mutable.Builder[Base, Bases] = Bases.newBuilder
+    }
 }
