@@ -71,7 +71,6 @@ object Bases {
       }
     }
 
-
   implicit object BasesOrdering extends Ordering[Bases] {
     val ord = iteratorOrdering[Base]
     override def compare(x: Bases, y: Bases): Int =
