@@ -15,7 +15,28 @@ class BasesTest
     }
 
     test("masking") {
-      Bases("aggtca".getBytes()).reverseComplement should ===("TGACCT")
+      "aggtca".reverseComplement should ===("TGACCT")
+    }
+
+    test("default ordering") {
+      Array[Bases](
+        "CCTT",
+        "CCGG",
+        "CATT",
+        "AAAA",
+        "TTTT",
+        "TCCT"
+      )
+      .sorted should ===(
+        Array(
+          "AAAA",
+          "CATT",
+          "CCGG",
+          "CCTT",
+          "TCCT",
+          "TTTT"
+        )
+      )
     }
   }
 
