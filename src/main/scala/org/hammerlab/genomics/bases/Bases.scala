@@ -36,6 +36,8 @@ class Bases private(val bytes: Bytes)
   /** Are all the given bases standard? */
   def allStandardBases: Boolean = bytes.forall(_.isStandardBase)
 
+  def +(right: Bases): Bases = this ++ right
+
   override def toString: String = bytes.map(_.toChar).mkString
 }
 

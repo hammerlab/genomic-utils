@@ -15,7 +15,7 @@ class BasesTest
     }
 
     test("masking") {
-      Bases("aggtca".getBytes()).reverseComplement should ===("TGACCT")
+      "aggtca".reverseComplement should ===("TGACCT")
     }
   }
 
