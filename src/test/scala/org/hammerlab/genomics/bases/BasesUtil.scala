@@ -15,7 +15,6 @@ trait BaseToBasesConversions {
 
 trait BasesUtil
   extends StringToBasesConversions
-    with BaseToBasesConversions {
-}
+    with BaseToBasesConversions
 
 object BasesUtil extends BasesUtil
