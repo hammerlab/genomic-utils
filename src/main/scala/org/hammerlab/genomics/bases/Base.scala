@@ -23,6 +23,8 @@ class Base private(val byte: Byte) extends AnyVal {
 
 object Base {
 
+  def apply(byte: Byte): Base = byte
+
   // The only externally-accessible way to construct Base instances.
   implicit def makeBase(byte: Byte): Base =
     byte match {

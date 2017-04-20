@@ -8,7 +8,7 @@ Utilities for working with genomic bases, cigar strings, and phred scores.
 
 - [`Bases`][] wraps a `Vector[Base]`, and implements [`BasesBuffer`][], with `Int` length
 	- well-suited for sub-contig-sized genomic-sequences, e.g. reads.
-- [`BasesBuffer`][] is a more general interface that can also be implemented for contig-sized sequences (often with `Long` length); see [`ContigSequence`](https://github.com/hammerlab/genomic-reference/blob/1.1.0_2.11/src/main/scala/org/hammerlab/genomics/reference/ContigSequence.scala).
+- [`BasesBuffer`][] is a more general interface that can also be implemented for contig-sized sequences (often with `Long` length); see [`Contig`](https://github.com/hammerlab/genomic-reference/blob/1.1.0_2.11/src/main/scala/org/hammerlab/genomics/reference/Contig.scala).
 - [`Base`][] wraps a `Byte`, and only a maximum of 5 are instantiated (`A`, `C`, `G`, `T`, and `N`).
 - All "wrapping" referenced above uses [value classes][] and carries no run-time cost.
 
