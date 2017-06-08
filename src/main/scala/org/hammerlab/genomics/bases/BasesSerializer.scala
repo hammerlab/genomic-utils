@@ -3,7 +3,9 @@ package org.hammerlab.genomics.bases
 import com.esotericsoftware.kryo.io.{ Input, Output }
 import com.esotericsoftware.kryo.{ Kryo, Serializer }
 
-class BasesSerializer extends Serializer[Bases] {
+class BasesSerializer
+  extends Serializer[Bases] {
+
   override def write(kryo: Kryo, output: Output, bases: Bases): Unit = {
     output.writeInt(bases.bytes.length, true)
     bases.foreach(base ⇒ output.writeByte(base.byte))
