@@ -21,7 +21,7 @@ class BasesTest
     test("default ordering") {
       Array[Bases](
         "CCTT",
-        "CCGG",
+        "CCNG",
         "CATT",
         "AAAA",
         "TTTT",
@@ -31,7 +31,7 @@ class BasesTest
         Array(
           "AAAA",
           "CATT",
-          "CCGG",
+          "CCNG",
           "CCTT",
           "TCCT",
           "TTTT"
