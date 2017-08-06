@@ -1,7 +1,7 @@
 organization := "org.hammerlab.genomics"
 name := "utils"
-version := "1.2.3"
-deps += libs.value('htsjdk)
+version := "1.3.0"
+deps += htsjdk
 enableMacroParadise
 addSparkDeps
 publishTestJar
