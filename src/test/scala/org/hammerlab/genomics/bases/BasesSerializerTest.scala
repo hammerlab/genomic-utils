@@ -3,9 +3,11 @@ package org.hammerlab.genomics.bases
 import org.hammerlab.spark.test.suite.{ KryoSparkSuite, SparkSerialization }
 
 class BasesSerializerTest
-  extends KryoSparkSuite(classOf[Registrar])
+  extends KryoSparkSuite
     with SparkSerialization
     with BasesUtil {
+
+  registrar[Registrar]
 
   def check(bases: Bases, otherBases: Bases = ""): Unit = {
     val deserd = deserialize[Bases](serialize(bases))

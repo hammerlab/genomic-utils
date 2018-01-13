@@ -1,7 +1,8 @@
 organization := "org.hammerlab.genomics"
 name := "utils"
-version := "1.3.1"
-deps += htsjdk
+r"1.3.1"
+github.repo("genomic-utils")
+dep(htsjdk)
 enableMacroParadise
 addSparkDeps
 publishTestJar
