@@ -1,6 +1,6 @@
 organization := "org.hammerlab.genomics"
 name := "utils"
-r"1.3.1"
+v"1.3.2"
 github.repo("genomic-utils")
 dep(htsjdk)
 enableMacroParadise

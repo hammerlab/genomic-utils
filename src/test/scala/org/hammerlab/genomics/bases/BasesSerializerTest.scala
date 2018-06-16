@@ -4,15 +4,15 @@ import org.hammerlab.spark.test.suite.{ KryoSparkSuite, SparkSerialization }
 
 class BasesSerializerTest
   extends KryoSparkSuite
-    with SparkSerialization
-    with BasesUtil {
+     with SparkSerialization
+     with BasesUtil {
 
   registrar[Registrar]
 
   def check(bases: Bases, otherBases: Bases = ""): Unit = {
     val deserd = deserialize[Bases](serialize(bases))
-    deserd should ===(bases)
-    deserd should !==(otherBases)
+    ==(deserd, bases)
+    !=(deserd, otherBases)
   }
 
   test("some bases") {
