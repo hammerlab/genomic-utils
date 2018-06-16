@@ -11,8 +11,8 @@ import scala.collection.{ IndexedSeqLike, mutable }
  */
 class Bases private(val bytes: Bytes)
   extends AnyVal
-    with BasesBuffer
-    with IndexedSeqLike[Base, Bases] {
+     with BasesBuffer
+     with IndexedSeqLike[Base, Bases] {
 
   protected[this] override def thisCollection: IndexedSeq[Base] = bytes
   protected[this] override def toCollection(repr: Bases): IndexedSeq[Base] = bytes

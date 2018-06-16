@@ -10,24 +10,25 @@ class BasesTest
     import BasesUtil._
 
     test("string conversions, reverse complement") {
-      "AGGTCA".reverseComplement should ===("TGACCT")
-      "AGGTCA".complement should ===("TCCAGT")
+      ===("AGGTCA".reverseComplement, "TGACCT")
+      ===("AGGTCA".complement, "TCCAGT")
     }
 
     test("masking") {
-      "aggtca".reverseComplement should ===("TGACCT")
+      ===("aggtca".reverseComplement, "TGACCT")
     }
 
     test("default ordering") {
-      Array[Bases](
-        "CCTT",
-        "CCNG",
-        "CATT",
-        "AAAA",
-        "TTTT",
-        "TCCT"
-      )
-      .sorted should ===(
+      ===(
+        Array[Bases](
+          "CCTT",
+          "CCNG",
+          "CATT",
+          "AAAA",
+          "TTTT",
+          "TCCT"
+        )
+        .sorted,
         Array(
           "AAAA",
           "CATT",
@@ -41,7 +42,7 @@ class BasesTest
   }
 
   test("take") {
-    Bases("AGGTCA").take(3) should ===(Bases("AGG"))
+    ==(Bases("AGGTCA").take(3), Bases("AGG"))
   }
 
   test("flatMap bases") {
@@ -53,7 +54,7 @@ class BasesTest
       )
       .flatMap(_.takeRight(2))
 
-    bases should ===(Bases("CAGATT"))
+    ==(bases, Bases("CAGATT"))
   }
 
   test("flatMap other") {
@@ -65,11 +66,11 @@ class BasesTest
       )
       .flatMap(_.bases)
 
-    bases should ===(Bases("AGGTCATCGATCGAAACCGGTT"))
+    ==(bases, Bases("AGGTCATCGATCGAAACCGGTT"))
   }
 
   test("concatenation") {
-    (Bases("AACC") ++ Bases("GGTT")) should ===(Bases("AACCGGTT"))
+    ==(Bases("AACC") ++ Bases("GGTT"), Bases("AACCGGTT"))
   }
 }
 
